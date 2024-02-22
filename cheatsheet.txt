@@ -1,0 +1,16 @@
+- init project
+cargo init
+
+- install dependencies
+cargo add rocket@0.5.0-rc.2 --features json
+cargo add serde --features derive
+cargo add chrono --features serde
+cargo add uuid --features v4
+cargo add num-bigint
+cargo add num-traits
+
+- nodemon equivalent for rust
+cargo install cargo-watch 
+
+- run in debug mode
+cargo watch -q -c -w src/ -x run
