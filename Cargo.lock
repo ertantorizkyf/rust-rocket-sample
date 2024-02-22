@@ -1029,6 +1029,7 @@ version = "0.1.0"
 dependencies = [
  "chrono",
  "num-bigint",
+ "num-traits",
  "rocket",
  "serde",
  "uuid",
