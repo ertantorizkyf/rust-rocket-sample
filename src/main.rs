@@ -17,6 +17,12 @@ use handlers::fs::{
     read_json_list_file
 };
 use handlers::curl::pokeapi;
+use handlers::redis::{
+    redis_get,
+    redis_set,
+    redis_get_hash,
+    redis_set_hash
+};
 
 #[macro_use]
 extern crate rocket;
@@ -62,6 +68,15 @@ fn rocket() -> _ {
             "/api/curl",
             routes![
                 pokeapi
+            ],
+        )
+        .mount(
+            "/api/redis",
+            routes![
+                redis_get,
+                redis_set,
+                redis_get_hash,
+                redis_set_hash
             ],
         )
 }
