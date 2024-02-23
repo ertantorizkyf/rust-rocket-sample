@@ -8,6 +8,7 @@ cargo add chrono --features serde
 cargo add uuid --features v4
 cargo add num-bigint
 cargo add num-traits
+cargo add curl
 
 - nodemon equivalent for rust
 cargo install cargo-watch 

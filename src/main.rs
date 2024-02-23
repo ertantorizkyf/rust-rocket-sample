@@ -16,6 +16,7 @@ use handlers::fs::{
     write_json_file,
     read_json_list_file
 };
+use handlers::curl::pokeapi;
 
 #[macro_use]
 extern crate rocket;
@@ -55,6 +56,12 @@ fn rocket() -> _ {
                 read_json_file,
                 write_json_file,
                 read_json_list_file
+            ],
+        )
+        .mount(
+            "/api/curl",
+            routes![
+                pokeapi
             ],
         )
 }
