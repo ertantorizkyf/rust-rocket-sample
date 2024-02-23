@@ -9,6 +9,7 @@ cargo add uuid --features v4
 cargo add num-bigint
 cargo add num-traits
 cargo add curl
+cargo add redis --features json --features tokio-comp
 
 - nodemon equivalent for rust
 cargo install cargo-watch 
