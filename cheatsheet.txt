@@ -10,6 +10,7 @@ cargo add num-bigint
 cargo add num-traits
 cargo add curl
 cargo add redis --features json --features tokio-comp
+cargo add mysql
 
 - nodemon equivalent for rust
 cargo install cargo-watch 
