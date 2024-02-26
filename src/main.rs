@@ -23,6 +23,10 @@ use handlers::redis::{
     redis_get_hash,
     redis_set_hash
 };
+use handlers::database::{
+    get_articles,
+    insert_article
+};
 
 #[macro_use]
 extern crate rocket;
@@ -77,6 +81,13 @@ fn rocket() -> _ {
                 redis_set,
                 redis_get_hash,
                 redis_set_hash
+            ],
+        )
+        .mount(
+            "/api/database",
+            routes![
+                get_articles,
+                insert_article
             ],
         )
 }
