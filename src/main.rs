@@ -27,6 +27,7 @@ use handlers::database::{
     get_articles,
     insert_article
 };
+use handlers::auth::authorization;
 
 #[macro_use]
 extern crate rocket;
@@ -35,6 +36,7 @@ mod handlers;
 mod models;
 mod responses;
 mod helpers;
+mod constants;
 
 #[launch]
 fn rocket() -> _ {
@@ -88,6 +90,12 @@ fn rocket() -> _ {
             routes![
                 get_articles,
                 insert_article
+            ],
+        )
+        .mount(
+            "/api/auth",
+            routes![
+                authorization
             ],
         )
 }
