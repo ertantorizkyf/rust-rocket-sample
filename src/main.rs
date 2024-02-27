@@ -28,6 +28,7 @@ use handlers::database::{
     insert_article
 };
 use handlers::auth::authorization;
+use fairings::auth::JwtValidationFairing;
 
 #[macro_use]
 extern crate rocket;
@@ -37,12 +38,14 @@ mod models;
 mod responses;
 mod helpers;
 mod constants;
+mod fairings;
 
 #[launch]
 fn rocket() -> _ {
     let student_app_data = models::student::AppState::init();
     rocket::build()
         .manage(student_app_data)
+        .attach(JwtValidationFairing)
         .mount(
             "/api/students",
             routes![
