@@ -7,7 +7,8 @@ use handlers::student::{
 };
 use handlers::general::{
     env_impl,
-    fibonacci
+    fibonacci,
+    middleware_impl_test
 };
 use handlers::fs::{
     read_txt_file,
@@ -60,7 +61,8 @@ fn rocket() -> _ {
             "/api/general",
             routes![
                 env_impl,
-                fibonacci
+                fibonacci,
+                middleware_impl_test
             ],
         )
         .mount(

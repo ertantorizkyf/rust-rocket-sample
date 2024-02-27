@@ -43,3 +43,13 @@ pub fn fibonacci(number: usize) -> Result<Json<GeneralResponseWithData>, Status>
 
     Ok(Json(json_response))
 }
+
+#[get("/middleware-impl-test")]
+pub fn middleware_impl_test() -> Result<Json<GeneralResponse>, Status> {
+    let json_response = GeneralResponse {
+        status: "success".to_string(),
+        message: "middleware impl testing".to_string()
+    };
+
+    Ok(Json(json_response))
+}
