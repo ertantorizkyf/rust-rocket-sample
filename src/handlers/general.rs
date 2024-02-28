@@ -22,13 +22,17 @@ use rocket::{
 pub fn env_impl() -> Result<Json<GeneralResponse>, Status> {
     let rust_env = match env::var_os("RUST_ENV") {
         Some(v) => v.into_string().unwrap(),
-        None => "unset".to_string()
+        None => "UNSET".to_string()
     };
 
+    let mut status = "success".to_string();
+    if rust_env == "UNSET" {
+        status = "failed".to_string();
+    }
 
     let json_response = GeneralResponse {
-        status: "success".to_string(),
-        message: rust_env,
+        status,
+        message: format!("Value of RUST_ENV is {}", rust_env),
     };
 
     Ok(Json(json_response))

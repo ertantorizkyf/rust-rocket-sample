@@ -41,6 +41,7 @@ mod responses;
 mod helpers;
 mod constants;
 mod fairings;
+mod tests;
 
 #[launch]
 fn rocket() -> _ {
