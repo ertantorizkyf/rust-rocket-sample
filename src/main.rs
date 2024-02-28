@@ -30,6 +30,7 @@ use handlers::database::{
 };
 use handlers::auth::authorization;
 use fairings::auth::JwtValidationFairing;
+use helpers::catcher::not_found;
 
 #[macro_use]
 extern crate rocket;
@@ -47,6 +48,7 @@ fn rocket() -> _ {
     rocket::build()
         .manage(student_app_data)
         .attach(JwtValidationFairing)
+        .register("/", catchers![not_found])
         .mount(
             "/api/students",
             routes![
