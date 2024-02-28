@@ -11,6 +11,8 @@ cargo add num-traits
 cargo add curl
 cargo add redis --features json --features tokio-comp
 cargo add mysql
+cargo add bcrypt
+cargo add jsonwebtoken
 
 - nodemon equivalent for rust
 cargo install cargo-watch 

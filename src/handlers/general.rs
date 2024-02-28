@@ -1,6 +1,10 @@
 use crate::{
     helpers::calc::calculate_fibonacci,
-    responses::general::{ GeneralResponse, GeneralResponseWithData }
+    models::header::RequestHeaders,
+    responses::general::{ 
+        GeneralResponse, 
+        GeneralResponseWithData 
+    }
 };
 
 use std::{
@@ -8,7 +12,10 @@ use std::{
     time::Instant
 };
 use rocket::{
-    get, http::Status, serde::json::Json 
+    get, 
+    http::Status, 
+    response::status::Custom, 
+    serde::json::Json
 };
 
 #[get("/env-impl")]
@@ -39,6 +46,29 @@ pub fn fibonacci(number: usize) -> Result<Json<GeneralResponseWithData>, Status>
             now.elapsed().as_secs(), now.elapsed().as_nanos()
         ),
         data: fib_num.to_string()
+    };
+
+    Ok(Json(json_response))
+}
+
+#[get("/middleware-impl-test")]
+pub fn middleware_impl_test(
+    headers: RequestHeaders
+) -> Result<Json<GeneralResponse>, Custom<Json<GeneralResponse>>> {
+    let auth_token = headers.0.get_one("authorization").unwrap();
+    if auth_token == "UNSET" {
+        let error_response = GeneralResponse {
+            status: "failed".to_string(),
+            message: "UNAUTHORIZED ACCESS!!!".to_string()
+        };
+
+        return Err(Custom(Status::Unauthorized, Json(error_response)));
+    }
+
+    let name = headers.0.get_one("name").unwrap();
+    let json_response = GeneralResponse {
+        status: "success".to_string(),
+        message: format!("{} is currently logged in", name)
     };
 
     Ok(Json(json_response))

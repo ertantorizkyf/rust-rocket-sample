@@ -7,7 +7,8 @@ use handlers::student::{
 };
 use handlers::general::{
     env_impl,
-    fibonacci
+    fibonacci,
+    middleware_impl_test
 };
 use handlers::fs::{
     read_txt_file,
@@ -27,6 +28,8 @@ use handlers::database::{
     get_articles,
     insert_article
 };
+use handlers::auth::authorization;
+use fairings::auth::JwtValidationFairing;
 
 #[macro_use]
 extern crate rocket;
@@ -35,12 +38,15 @@ mod handlers;
 mod models;
 mod responses;
 mod helpers;
+mod constants;
+mod fairings;
 
 #[launch]
 fn rocket() -> _ {
     let student_app_data = models::student::AppState::init();
     rocket::build()
         .manage(student_app_data)
+        .attach(JwtValidationFairing)
         .mount(
             "/api/students",
             routes![
@@ -55,7 +61,8 @@ fn rocket() -> _ {
             "/api/general",
             routes![
                 env_impl,
-                fibonacci
+                fibonacci,
+                middleware_impl_test
             ],
         )
         .mount(
@@ -88,6 +95,12 @@ fn rocket() -> _ {
             routes![
                 get_articles,
                 insert_article
+            ],
+        )
+        .mount(
+            "/api/auth",
+            routes![
+                authorization
             ],
         )
 }
