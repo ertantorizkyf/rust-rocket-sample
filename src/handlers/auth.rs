@@ -27,13 +27,13 @@ pub fn authorization(
     let is_matched = verify(body.password.clone(), &hashed_pass).unwrap();
 
     if !is_matched { 
-        let err_response = AuthResponse {
+        let error_response = AuthResponse {
             status: "failed".to_string(),
             message: "Wrong password!".to_string(),
             token: "".to_string()
         };
 
-        return Err(Custom(Status::Unauthorized, Json(err_response)));
+        return Err(Custom(Status::Unauthorized, Json(error_response)));
     } 
     
     let token = generate_token(DUMMYNAME.to_string(), DUMMYMAIL.to_string());
