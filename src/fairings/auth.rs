@@ -16,10 +16,16 @@ use rocket::{
         Fairing, 
         Info, 
         Kind
-    }, http::Header, Data, Request
+    }, 
+    http::Header,
+    Data, 
+    Request
 };
 use jsonwebtoken::{
-    decode, DecodingKey, TokenData, Validation
+    decode, 
+    DecodingKey, 
+    TokenData, 
+    Validation
 };
 
 pub struct JwtValidationFairing;
@@ -50,16 +56,28 @@ impl Fairing for JwtValidationFairing {
                     let decoded_token = decode::<JwtClaims>(&bearer_token, &DecodingKey::from_secret(jwt_secret.as_ref()), &Validation::default()).unwrap_or(TokenData { 
                         header: jsonwebtoken::Header::default(), 
                         claims: JwtClaims { 
-                            name: "".to_string(), 
-                            email: "".to_string(), 
+                            name: "UNSET".to_string(), 
+                            email: "UNSET".to_string(), 
                             exp: 0, 
                             iat: 0
                         }
                     });
 
+                    if decoded_token.claims.name.to_string() == "UNSET" {
+                        req.add_header(Header::new("authorization", "UNSET".to_string()));
+                    }
+
                     req.add_header(Header::new("name", decoded_token.claims.name.to_string()));
                     req.add_header(Header::new("email", decoded_token.claims.email.to_string()));
+                } else {
+                    req.add_header(Header::new("authorization", "UNSET".to_string()));
+                    req.add_header(Header::new("name", "UNSET".to_string()));
+                    req.add_header(Header::new("email", "UNSET".to_string()));
                 }
+            } else {
+                req.add_header(Header::new("authorization", "UNSET".to_string()));
+                req.add_header(Header::new("name", "UNSET".to_string()));
+                req.add_header(Header::new("email", "UNSET".to_string()));
             }
         }
     }
