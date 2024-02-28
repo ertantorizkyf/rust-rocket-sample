@@ -13,6 +13,7 @@ This is a sample rust backend project implementing rocket framework
 - src/responses/* - Response structure
 - src/constants/* - Store constant values
 - src/fairings/* - Middleware implementation
+- src/tests/* - Unit test
 
 ## Running the app
 - debug mode: `cargo watch -q -c -w src/ -x run`
