@@ -1,8 +1,5 @@
 use crate::{
-    constants::database::{
-        DB_URL,
-        TBL_ARTICLES
-    },
+    constants::database::TBL_ARTICLES,
     models::article::Article,
     helpers::database::get_conn,
     responses::{article::ArticleListResponse, general::GeneralResponse}
