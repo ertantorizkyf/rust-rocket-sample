@@ -8,8 +8,10 @@ pub mod env_impl_test_mod {
     #[test]
     fn env_impl_ok() {
         // env impl success, RUST_ENV is set
-        env::remove_var("RUST_ENV");
-        env::set_var("RUST_ENV", "test");
+        let is_env_set = env::var("RUST_ENV").is_ok();
+        if !is_env_set {
+            env::set_var("RUST_ENV", "test");
+        }
 
         let status = &env_impl().unwrap().status;
         let message = &env_impl().unwrap().message;
@@ -20,7 +22,10 @@ pub mod env_impl_test_mod {
     #[test]
     fn env_impl_nok() {
         // env impl success, RUST_ENV is not set
-        env::remove_var("RUST_ENV");
+        let is_env_set = env::var("RUST_ENV").is_ok();
+        if is_env_set {
+            env::remove_var("RUST_ENV");
+        }
 
         let status = &env_impl().unwrap().status;
         let message = &env_impl().unwrap().message;

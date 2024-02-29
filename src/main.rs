@@ -107,3 +107,7 @@ fn rocket() -> _ {
             ],
         )
 }
+
+#[cfg(test)]
+#[path = "./tests/rocket_general_test.rs"]
+mod rocket_general_test;
