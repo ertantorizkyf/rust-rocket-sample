@@ -64,13 +64,13 @@ impl Fairing for JwtValidationFairing {
                     });
 
                     if decoded_token.claims.name.to_string() == "UNSET" {
-                        req.add_header(Header::new("authorization", "UNSET".to_string()));
+                        req.replace_header(Header::new("authorization", "UNSET".to_string()));
                     }
 
                     req.add_header(Header::new("name", decoded_token.claims.name.to_string()));
                     req.add_header(Header::new("email", decoded_token.claims.email.to_string()));
                 } else {
-                    req.add_header(Header::new("authorization", "UNSET".to_string()));
+                    req.replace_header(Header::new("authorization", "UNSET".to_string()));
                     req.add_header(Header::new("name", "UNSET".to_string()));
                     req.add_header(Header::new("email", "UNSET".to_string()));
                 }
